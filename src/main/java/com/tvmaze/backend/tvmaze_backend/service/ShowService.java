@@ -2,6 +2,7 @@ package com.tvmaze.backend.tvmaze_backend.service;
 
 import com.tvmaze.backend.tvmaze_backend.client.TvMazeClient;
 import com.tvmaze.backend.tvmaze_backend.client.dto.TvMazeSearchResponse;
+import com.tvmaze.backend.tvmaze_backend.client.dto.TvMazeShow;
 import com.tvmaze.backend.tvmaze_backend.dto.ShowSearchResponse;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,10 @@ public class ShowService {
                 response.show().summary(),
                 response.show().genres()
         );
+    }
+
+    public TvMazeShow getShow(Integer showId) {
+        return tvMazeClient.getTvMazeShow(showId);
     }
 
 

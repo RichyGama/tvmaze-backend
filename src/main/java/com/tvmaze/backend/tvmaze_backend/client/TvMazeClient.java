@@ -1,6 +1,7 @@
 package com.tvmaze.backend.tvmaze_backend.client;
 
 import com.tvmaze.backend.tvmaze_backend.client.dto.TvMazeSearchResponse;
+import com.tvmaze.backend.tvmaze_backend.client.dto.TvMazeShow;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
@@ -20,6 +21,13 @@ public class TvMazeClient {
                         .build())
                 .retrieve()
                 .body(TvMazeSearchResponse[].class);
+    }
+
+    public TvMazeShow getTvMazeShow(Integer showId) {
+        return restClient.get()
+                .uri("/shows/{showId}", showId)
+                .retrieve()
+                .body(TvMazeShow.class);
     }
 
 }

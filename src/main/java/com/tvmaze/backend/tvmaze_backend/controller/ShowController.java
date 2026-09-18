@@ -1,12 +1,10 @@
 package com.tvmaze.backend.tvmaze_backend.controller;
 
 
+import com.tvmaze.backend.tvmaze_backend.client.dto.TvMazeShow;
 import com.tvmaze.backend.tvmaze_backend.dto.ShowSearchResponse;
 import com.tvmaze.backend.tvmaze_backend.service.ShowService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,6 +22,11 @@ public class ShowController {
     public List<ShowSearchResponse> searchShows(
             @RequestParam String query) {
         return showService.searchShows(query);
+    }
+
+    @GetMapping("/{showId}")
+    public TvMazeShow getShow(@PathVariable Integer showId) {
+        return showService.getShow(showId);
     }
 
 }
