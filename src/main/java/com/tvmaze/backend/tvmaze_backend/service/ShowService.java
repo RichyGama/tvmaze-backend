@@ -4,6 +4,8 @@ import com.tvmaze.backend.tvmaze_backend.client.TvMazeClient;
 import com.tvmaze.backend.tvmaze_backend.client.dto.TvMazeSearchResponse;
 import com.tvmaze.backend.tvmaze_backend.client.dto.TvMazeShow;
 import com.tvmaze.backend.tvmaze_backend.dto.ShowSearchResponse;
+import com.tvmaze.backend.tvmaze_backend.model.Show;
+import com.tvmaze.backend.tvmaze_backend.repository.ShowRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -14,8 +16,11 @@ public class ShowService {
 
     private final TvMazeClient tvMazeClient;
 
-    public ShowService(TvMazeClient tvMazeClient) {
+    private final ShowRepository showRepository;
+
+    public ShowService(TvMazeClient tvMazeClient, ShowRepository showRepository) {
         this.tvMazeClient = tvMazeClient;
+        this.showRepository = showRepository;
     }
 
     public List<ShowSearchResponse> searchShows(String query) {
@@ -40,8 +45,35 @@ public class ShowService {
         );
     }
 
-    public TvMazeShow getShow(Integer showId) {
-        return tvMazeClient.getTvMazeShow(showId);
+    public Show getShow(Integer showId) {
+
+        return showRepository.findById(showId)
+                .orElseGet(() -> {
+                    TvMazeShow tvMazeShow = tvMazeClient.getTvMazeShow(showId);
+
+                    Show show = new Show(
+                            tvMazeShow.id(),
+                            tvMazeShow.name(),
+                            tvMazeShow.summary(),
+                            tvMazeShow.genres(),
+                            getChannel(tvMazeShow)
+                    );
+
+                    return showRepository.save(show);
+                });
+    }
+
+    private String getChannel(TvMazeShow tvMazeShow) {
+
+        if (tvMazeShow.network() != null) {
+            return tvMazeShow.network().name();
+        }
+
+        if (tvMazeShow.webChannel() != null) {
+            return tvMazeShow.webChannel().name();
+        }
+
+        return null;
     }
 
 

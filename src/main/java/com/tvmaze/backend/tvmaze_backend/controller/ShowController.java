@@ -1,8 +1,7 @@
 package com.tvmaze.backend.tvmaze_backend.controller;
 
-
-import com.tvmaze.backend.tvmaze_backend.client.dto.TvMazeShow;
 import com.tvmaze.backend.tvmaze_backend.dto.ShowSearchResponse;
+import com.tvmaze.backend.tvmaze_backend.model.Show;
 import com.tvmaze.backend.tvmaze_backend.service.ShowService;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +24,7 @@ public class ShowController {
     }
 
     @GetMapping("/{showId}")
-    public TvMazeShow getShow(@PathVariable Integer showId) {
+    public Show getShow(@PathVariable Integer showId) {
         return showService.getShow(showId);
     }
 
