@@ -14,16 +14,18 @@ public class Show {
     private String summary;
     private List<String> genres;
     private String channel;
+    private List<Comment> comments;
 
     public Show() {
     }
 
-    public Show(Integer id, String name, String summary, List<String> genres, String channel) {
+    public Show(Integer id, String name, String summary, List<String> genres, String channel, List<Comment> comments) {
         this.id = id;
         this.name = name;
         this.summary = summary;
         this.genres = genres;
         this.channel = channel;
+        this.comments = comments;
     }
 
     public Integer getId() {
@@ -44,5 +46,9 @@ public class Show {
 
     public String getChannel() {
         return channel;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
     }
 }
